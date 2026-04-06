@@ -134,7 +134,16 @@ def build_executive_one_pager(
     def md_table(df: pd.DataFrame, cols: list[str]) -> str:
         if df is None or df.empty:
             return "_No data_"
-        return df[cols].to_markdown(index=False)
+        try:
+            return df[cols].to_markdown(index=False)
+        except Exception:
+            # Fallback to a simple pipe table (avoids optional tabulate dependency issues)
+            sub = df[cols].copy()
+            sub = sub.fillna("")
+            header = "| " + " | ".join(cols) + " |"
+            sep = "| " + " | ".join(["---"] * len(cols)) + " |"
+            rows = ["| " + " | ".join(map(str, r)) + " |" for r in sub.astype(str).to_numpy().tolist()]
+            return "\n".join([header, sep] + rows)
 
     s = []
     s.append("## Campaign → Revenue Impact (Prototype)")
@@ -182,7 +191,15 @@ def build_ops_report(
     def md_table(df: pd.DataFrame) -> str:
         if df is None or df.empty:
             return "_No data_"
-        return df.to_markdown(index=False)
+        try:
+            return df.to_markdown(index=False)
+        except Exception:
+            sub = df.copy().fillna("")
+            cols = sub.columns.tolist()
+            header = "| " + " | ".join(cols) + " |"
+            sep = "| " + " | ".join(["---"] * len(cols)) + " |"
+            rows = ["| " + " | ".join(map(str, r)) + " |" for r in sub.astype(str).to_numpy().tolist()]
+            return "\n".join([header, sep] + rows)
 
     s = []
     s.append("## Full detailed report (Prototype)")
