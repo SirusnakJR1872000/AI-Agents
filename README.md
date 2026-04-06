@@ -18,7 +18,12 @@ streamlit run app.py
 
 ## Data inputs
 
-You can upload your own CSVs in the app, or use the **built-in sample data**.
+You can ingest data via **connectors** (prototype-simulated) or manual upload:
+
+- **Sample data (built-in)**
+- **Manual upload (CSV)**
+- **SFMC → SFTP connector (simulated as local folder)**: drops land in `connectors/sfmc_sftp/...`
+- **Netcore → S3 connector (simulated as local folder)**: drops land in `connectors/netcore_s3/...`
 
 Expected columns:
 
@@ -54,4 +59,13 @@ If you don’t provide an identity map, the prototype will do simple stitching u
 
 ## Notes (prototype scope)
 - Attribution model implemented: **last-touch click** within window (configurable); includes **direct vs indirect** tagging.
-- Several “agent” modules (competitor/news context, IP reputation, credit utilization) are included as **stub panels** so the UX flow matches the target architecture.
+- External context inputs (competitor/news/market notes) are supported as **uploads** and are appended into the reports.
+
+## Connector folders (simulated)
+
+Drop CSVs here (latest modified file is picked automatically):
+
+- `connectors/sfmc_sftp/engagement/*.csv`
+- `connectors/sfmc_sftp/transactions/*.csv`
+- `connectors/netcore_s3/engagement/*.csv`
+- `connectors/netcore_s3/transactions/*.csv`

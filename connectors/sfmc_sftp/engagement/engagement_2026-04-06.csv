@@ -1,0 +1,8 @@
+event_ts,channel,campaign_id,campaign_name,campaign_type,user_id,email,phone,engagement_type,target_product,lob,category,brand,creative_id,cta,language
+2026-03-20 10:05:00,WhatsApp,CMP001,Summer Shirts,Promotional,U001,u001@example.com,9000000001,Click,Summer Shirt,Apparel,Shirts,BrandA,CR001,Shop Now,EN
+2026-03-20 10:07:00,WhatsApp,CMP001,Summer Shirts,Promotional,U002,u002@example.com,9000000002,Click,Summer Shirt,Apparel,Shirts,BrandA,CR001,Shop Now,EN
+2026-03-21 09:30:00,Email,CMP002,Cart Abandonment,Lifecycle,U001,u001@example.com,9000000001,Click,Summer Shirt,Apparel,Shirts,BrandA,CR010,Resume Cart,EN
+2026-03-22 12:00:00,SMS,CMP003,Weekend Sale,Promotional,U003,u003@example.com,9000000003,Click,Sneakers,Footwear,Sneakers,BrandB,CR020,Buy,EN
+2026-03-25 18:10:00,Push,CMP004,New Arrivals,Promotional,U002,u002@example.com,9000000002,Click,Jeans,Apparel,Jeans,BrandA,CR030,Explore,EN
+2026-03-27 11:15:00,Email,CMP005,Winback,Trigger-based,U004,u004@example.com,9000000004,Open,,Apparel,Shirts,BrandA,CR040,Open,EN
+2026-03-27 11:20:00,Email,CMP005,Winback,Trigger-based,U004,u004@example.com,9000000004,Click,Shirt,Apparel,Shirts,BrandA,CR040,Shop,EN

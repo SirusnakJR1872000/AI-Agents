@@ -8,6 +8,7 @@ import plotly.express as px
 import streamlit as st
 
 from proto.attribution import AttributionConfig, run_attribution, validate_inputs
+from proto.connectors import ConnectorConfig, load_external_context, load_from_netcore_s3, load_from_sfmc_sftp
 from proto.insights import (
     InsightConfig,
     build_executive_one_pager,
@@ -25,13 +26,35 @@ st.title("Campaign Attribution + Intelligence Prototype")
 
 with st.sidebar:
     st.header("Inputs")
-    use_sample = st.toggle("Use sample data", value=True)
+    source = st.selectbox(
+        "Data source (connectors)",
+        [
+            "Sample data (built-in)",
+            "Manual upload (CSV)",
+            "SFMC → SFTP (simulated folder)",
+            "Netcore → S3 (simulated folder)",
+        ],
+        index=0,
+    )
 
     st.divider()
-    st.subheader("Upload CSVs (optional)")
-    up_eng = st.file_uploader("Engagement events CSV", type=["csv"])
-    up_txn = st.file_uploader("Transactions CSV", type=["csv"])
-    up_id = st.file_uploader("Identity map CSV (optional)", type=["csv"])
+    st.subheader("Connector settings")
+    conn = ConnectorConfig()
+    sfmc_dir = st.text_input("SFMC SFTP folder", value=conn.sfmc_sftp_dir)
+    netcore_dir = st.text_input("Netcore S3 folder", value=conn.netcore_s3_dir)
+
+    st.subheader("Manual upload (only used if source = Manual upload)")
+    up_eng = st.file_uploader("Engagement events CSV", type=["csv"], key="up_eng")
+    up_txn = st.file_uploader("Transactions CSV", type=["csv"], key="up_txn")
+    up_id = st.file_uploader("Identity map CSV (optional)", type=["csv"], key="up_id")
+
+    st.subheader("External context inputs (optional)")
+    up_context = st.file_uploader(
+        "Upload competitor/news/context notes (txt/csv)",
+        type=["txt", "csv", "md"],
+        accept_multiple_files=True,
+        key="up_ctx",
+    )
 
     st.divider()
     st.header("Attribution config")
@@ -65,16 +88,49 @@ def _read_upload(up) -> pd.DataFrame:
         return pd.DataFrame()
     return pd.read_csv(up)
 
+@st.cache_data(show_spinner=False)
+def _load_sfmc(sfmc_sftp_dir: str) -> tuple[pd.DataFrame, pd.DataFrame]:
+    cfg = ConnectorConfig(sfmc_sftp_dir=sfmc_sftp_dir)
+    return load_from_sfmc_sftp(cfg)
 
-if use_sample:
+
+@st.cache_data(show_spinner=False)
+def _load_netcore(netcore_s3_dir: str) -> tuple[pd.DataFrame, pd.DataFrame]:
+    cfg = ConnectorConfig(netcore_s3_dir=netcore_s3_dir)
+    return load_from_netcore_s3(cfg)
+
+
+def _context_text(files) -> str:
+    if not files:
+        return ""
+    uploads = [f.getvalue() for f in files]
+    names = [f.name for f in files]
+    return load_external_context(uploads, names)
+
+
+context_notes = _context_text(up_context)
+
+if source == "Sample data (built-in)":
     engagement, txns, identity = _load_sample()
-else:
+elif source == "Manual upload (CSV)":
     engagement = _read_upload(up_eng)
     txns = _read_upload(up_txn)
     identity = _read_upload(up_id)
+elif source == "SFMC → SFTP (simulated folder)":
+    engagement, txns = _load_sfmc(sfmc_dir)
+    identity = _read_upload(up_id)
+elif source == "Netcore → S3 (simulated folder)":
+    engagement, txns = _load_netcore(netcore_dir)
+    identity = _read_upload(up_id)
+else:
+    engagement, txns, identity = _load_sample()
 
 
 st.subheader("1) Ingestion + Validation")
+st.caption(
+    f"Connector source: **{source}**. "
+    "SFMC/Netcore connectors are simulated as local folders (latest CSV wins)."
+)
 colA, colB, colC = st.columns([2, 2, 1])
 with colA:
     st.caption("Engagement (preview)")
@@ -165,7 +221,7 @@ ops_md = build_ops_report(
     exceptions=exc,
     creative=creative,
     frequency=freq,
-    context_notes=editor_notes if editor_notes else None,
+    context_notes="\n\n".join([x for x in [context_notes, editor_notes] if x]).strip() or None,
 )
 
 col1, col2 = st.columns(2)
