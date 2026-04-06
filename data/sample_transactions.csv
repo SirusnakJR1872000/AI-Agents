@@ -1,0 +1,5 @@
+txn_ts,order_id,revenue,user_id,email,phone,product,lob,category,brand
+2026-03-23 14:00:00,ORD1001,50,U001,u001@example.com,9000000001,Summer Shirt,Apparel,Shirts,BrandA
+2026-03-26 10:00:00,ORD1002,75,U002,u002@example.com,9000000002,Jeans,Apparel,Jeans,BrandA
+2026-03-23 16:30:00,ORD1003,120,U003,u003@example.com,9000000003,Sneakers,Footwear,Sneakers,BrandB
+2026-04-01 09:10:00,ORD1004,40,U004,u004@example.com,9000000004,Shirt,Apparel,Shirts,BrandA

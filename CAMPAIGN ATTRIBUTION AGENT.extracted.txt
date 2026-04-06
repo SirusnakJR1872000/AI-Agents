@@ -1,0 +1,241 @@
+CAMPAIGN ATTRIBUTION AGENT
+🔷 Data Prerequisites & Ingestion Requirements
+Core Engagement & Customer Data (The Data Feed) (Automation)
+Cross-channel engagement data across:
+SFMC, Karix, Netcore, and other external system
+Email Report (Sent, Delivered, Open, Click)
+SMS Report (Delivered, Click)
+WhatsApp Report (Delivered, Read, Click)
+Push Notifications Report (Delivered, Click)
+RCS / Web Popups Report (Interaction events)
+Google Analytics
+UTM tracking via Clicks URL
+Share report from different system in .csv file.
+Each record must be tied to a unique user identifier:
+Phone number
+Email ID
+Customer ID
+Campaign Metadata (Automation)
+Campaign ID / Name
+Campaign type (Promotional / Lifecycle / Trigger-based)
+Campaign date / duration
+Channel used
+Business dimension mapping:
+LOB / Category / Brand / Business Unit
+Transaction / Conversion Data (Automation)
+Customer-level transaction data including:
+Order ID / Invoice ID
+Transaction date
+Revenue amount
+Product / Category / LOB / Brand
+Non-purchase conversions (optional):
+Leads generated
+Test drives (auto)
+Appointments / bookings
+Form submissions
+Identity Resolution Layer (Automation)
+Mapping across:
+Phone ↔ Email ↔ Customer ID
+Ability to stitch:
+Cross-channel engagement
+Transactions
+Data Ingestion Pathways
+A. Salesforce Marketing Cloud (SFMC) Workflow To ensure a seamless flow of information from Salesforce, the architecture bifurcates data based on its point of origin:
+Transactional Records: Purchase and sales data will flow from the Data cloud into SFMC (free of cost). From there, it will be pushed to a SFMC SFTP for external processing.
+Campaign Engagement Metrics: Metadata related to campaign performance (opens, clicks, conversions) will be pulled directly from SFMC Data Extensions. This transfer will be managed via Automation Studio, which will automate the delivery of these extensions to the SFTP on a recurring schedule.
+B. Netcore & Cloud Storage Workflow The integration for Netcore-supported brands will mirror the Salesforce logic but will utilize cloud-native storage for data landing:
+Standardized Ingestion: Data from Netcore will be routed to brand-specific storage environments.
+Infrastructure Variations: For brands such as Adidas, data will be pushed to dedicated Amazon S3 buckets. For entities like M&S, the system will adapt to their specific cloud infrastructure to ensure consistent data availability for the Python consolidation script.
+For Netcore CDP – we recommend having campaign attribution setup as a feature directly within CDP
+The Attribution Logic (Automation)
+Identity Stitching & Ingestion: The system collects engagement logs (Email, SMS, etc.) and transaction data. It uses an Identity Resolution Layer to map Email/Phone/Customer IDs to create a Unified Customer View.
+Event Sequencing: The engine checks that the campaign engagement (Click/Interaction) happened before the transaction date.
+Attribution Window Filter: The system applies a "lookback" filter (e.g., 7 days). A transaction is only attributed if it occurs within X days of the campaign click.
+Product & Category Mapping: The engine determines if the sale was Direct (the specific product targeted) or Indirect (a different brand or category under the same business unit).
+Practical Logic Example: 7-Day Attribution
+Manual Ingestion Support (Manual)
+Ability to ingest:
+CSV / Excel campaign logs
+Transaction datasets
+Schema validation before ingestion
+Data Quality Requirements (Automation)
+Timestamp consistency
+Unique identifiers availability
+Deduplication rules
+Event sequencing (engagement → transaction)
+Privacy & Compliance Boundaries (Automation)
+Tokenization of PII
+Consent-based tracking
+Compliance with:
+GDPR
+CCPA
+DPDP (India)
+🔷 System Architecture
+High-Level System Topology
+Multi-source data ingestion layer:
+Campaign platforms (SFMC, Netcore, etc.)
+Engagement logs
+Transaction systems (CRM / POS / DMS / E-commerce)
+Data flows into: (Automation)
+Normalization layer
+Identity resolution layer
+Attribution engine
+Data Integration & Governance (The Data Layer)
+1. Data Normalization Layer
+Standardizes:
+Channel engagement definitions
+Date/time formats
+Business dimensions
+2. Identity Stitching Layer
+Resolves:
+Cross-channel identity
+Creates:
+Unified customer view
+3. Attribution Engine (Core Agent)
+Applies:
+Attribution window logic
+Engagement-to-transaction mapping
+Handles:
+Direct attribution
+Indirect attribution (cross-category / cross-LOB / cross-brand)
+4. Configuration Layer
+Allows:
+Dynamic window selection
+5. Output Layer
+Generates:
+Customer-level attribution
+Campaign-level revenue
+Channel-level impact
+🔷 Human-in-the-Loop Workflow & Governance
+User Interaction Mechanics
+User provides:
+Campaign selection
+Attribution window
+Business filters
+Validation & Control Points
+1. Input Validation Stage
+Validate:
+Campaign completeness
+Data availability
+2. Attribution Logic Validation
+User can:
+Adjust attribution window
+Choose attribution model
+3. Output Review Stage
+User reviews:
+Revenue attribution
+Conversion mapping
+Cross-dimension attribution
+4. Exception Handling
+Flag:
+Missing transactions
+Duplicate attribution
+Conflicting identity mapping
+🔷 Final System Outputs & User Deliverables (The Outcome Layer)
+🔶 Core Attribution Outputs
+1. Customer-Level Attribution Dataset (Automation)
+Customer ID
+Campaign ID
+Channel
+Engagement type
+Attribution window applied
+Transaction flag
+Revenue attributed
+Direct / Indirect attribution tag
+2. Campaign-Level Attribution Summary  (Automation)
+Total engaged users
+Total converted users
+Conversion rate
+Total attributed revenue
+Average revenue per user
+3. Channel-Level Attribution Analysis  (Automation)
+Revenue contribution by:
+Email
+SMS
+WhatsApp
+Push
+Conversion efficiency by channel
+🔶 Advanced Attribution Analytics (Automation)
+4. Cross-Dimension Attribution
+Campaign vs:
+LOB
+Category
+Brand
+Identify:
+Cross-sell impact
+Upsell patterns
+5. Time-to-Conversion Analysis (Automation)
+Time gap between:
+Engagement → Transaction
+Distribution across:
+Same day
+1–3 days
+7 days
+30 days
+6. Attribution Window Sensitivity (Automation)
+Compare:
+7-day vs 15-day vs 30-day attribution
+Impact on:
+revenue
+conversions
+7. Campaign ROI Analysis (Automation)
+Campaign cost (manual input)
+Revenue generated
+ROI calculation
+🔶 Strategic Outputs
+8. High-Impact Campaign Identification (Agent)
+Campaigns with:
+highest revenue contribution
+highest conversion rate
+9. Channel Effectiveness for Conversion (Agent)
+Which channel drives:
+best conversion
+best revenue
+10. Segment-Level Attribution (Agent)
+Attribution by:
+high-value customers
+repeat buyers
+churn-risk users
+🔶 Executive Deliverables
+11. Attribution Summary Dashboard (Agent)
+Visual representation:
+conversions
+revenue
+channel contribution
+12. Attribution Report (Detailed) (Automation) (Agent)
+Full dataset
+Model explanation
+Attribution logic transparency
+13. Executive One-Pager (Agent)
+Simplified summary:
+“Campaign → Revenue Impact”
+Key highlights:
+best performing campaigns
+top channels
+revenue generated
+🔷 Output Format
+🔷 Success Metrics
+Operational Efficiency
+Reduction in attribution calculation time
+Reduction in manual joins
+Accuracy
+% of correctly attributed transactions
+Reduction in attribution errors
+Business Impact
+Improved campaign ROI visibility
+Better channel optimization
+Scalability
+Ability to handle:
+multiple campaigns
+multiple channels
+multiple brands
+Step | Action/Data Point | Agent Logic
+Day 1 | User clicks a WhatsApp link for a "Summer Shirt" campaign. | Capture Engagement: WhatsApp Report (Click).
+Day 4 | User buys a "Summer Shirt" for $50 via the website. | Ingest Transaction: Identify via Phone number.
+Check 1 | Did Engagement happen before Purchase? | Yes: Day 1 < Day 4.
+Check 2 | Is the gap (3 days) within the 7-day window? | Yes. Attribution valid.
+Check 3 | Was the product the same as the campaign? | Yes: Direct Attribution Tagged.
+Other product – Indirect Attribute
+Output Type | Format
+Attribution Dataset | CSV / Table
+Executive Summary | One-pager/Text

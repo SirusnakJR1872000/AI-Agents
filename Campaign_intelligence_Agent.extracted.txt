@@ -1,0 +1,31 @@
+CAMPAIGN INTELLIGENCE – AS IS
+Siloed Data Extraction: Compiling basic delivery metrics requires highly labor-intensive manual extraction from multiple disconnected systems.
+Guesswork in Trend Analysis: Spotting performance trends involves manually scanning historical data, which wastes hours and relies on subjective guesswork and meetings to determine the underlying causes.
+Disjointed Channel Comparisons: Comparing performance across Email, SMS, WhatsApp, and Push demands tedious cross-referencing between disjointed platforms.
+Painstaking Creative Tracking: Tracking engagement for specific creatives, variants, and CTAs requires manual mapping and logging across every channel.
+To Be:
+Final System Outputs & User Deliverables (The Outcome Layer)
+Core Campaign & Channel Execution Dashboards
+Campaign KPI Report: A granular, tabular, and graphical breakdown of core delivery metrics (Sent, Delivery Rate, Read/Open Rate, Failed, Unsubscribe, Bounced) (Automation)
+Trend Identification: Need to identify the downs and ups in trends with reasons (Automation) (Agent)
+Channel-Wise Performance: Comparative matrices analyzing the relative effectiveness of Email, SMS, WhatsApp, Push, RCS, and Web Popups (Automation)
+Creative-Wise Performance: Engagement tracking for specific copy, languages, images, CTA, and messaging variants across channels (Automation) (Agent)
+Frequency Meter: Visual fatigue-monitoring tools that track how often specific user cohorts are being contacted to prevent unsubscribe spikes (Automation) (Agent)
+Strategic & Attribution Analytics
+Campaign Attribution Report: Multi-touch or single-touch attribution models linking specific channel interactions to final user conversions (Automation) (Agent)
+ROI Analysis: A definitive breakdown of spend versus generated revenue, specifically highlighting the high-ROI optimization opportunities identified by the reasoning engine (Automation) (Agent)
+Lifecycle Journey Performance: Node-by-node conversion analysis of automated SFMC journeys (e.g., Onboarding, Cart Abandonment) (Automation) (Agent)
+Segmentation Performance: Comparative analysis of specific audience cohorts (e.g., High-Intent vs. Churn-Risk) to determine which segments yield the best engagement (Automation) (Agent)
+Market & Competitive Context
+Competitor Analysis: Structured breakdowns of competitor campaign moves based on manually provided datasets (Agent)
+Outside News Insights: Text-based "Market Context Notes" appended to performance dips or spikes, derived from uploaded qualitative intelligence (Agent)
+Operational & System Health
+Credit Utilisations: Tracking and forecasting of SFMC Super Messages and SMS limits to prevent campaign failure mid-flight (Agent)
+IP Reputation and WhatsApp number Health (Agent)
+Executive Deliverables
+One-Pager Newsletter: The final, non-technical, visual-summary compatible export (abstracting the deep math) designed explicitly for the client to circulate internally. This includes the natural language UI regeneration prompts to pivot the data on the fly (Agent)
+Full detailed report: The comprehensive, highly analytical, and diagnostic export (exposing the deep math) designed explicitly for the Marketing Operations team to validate the insight. This includes a transparent, step-by-step breakdown of statistical weights and probabilistic confidence scores, alongside a dynamic ready for human-in-the-loop review, editing, and approval. (Agent)
+Note: Human-in-the-Loop Workflow & Governance
+User Interaction Mechanics
+UI requirements for editing and adjusting recommendations prior to approval
+Input given a campaign, type of campaign, date etc
